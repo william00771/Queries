@@ -437,7 +437,135 @@ SELECT [Suburb]
   WHERE [Category - Rooms] = 'Medium'
     AND [Flag - Car] = 'Yes'
 
+-------------------------------------------------------------------------------------------------------------------
+
+/*Appending Data (Tables)*/
+/*Ensure data column names and data types are the same (obviously)*/
+
+-- Keeping duplicates Union All
+SELECT	[Name]
+		,[Pay]
+FROM [dbo].[Pay - Female]
+
+UNION ALL
+
+SELECT	[Name]
+		,[Pay]
+FROM [dbo].[Pay - Male]
+
+-- Removing duplicates Union All
+SELECT	[Name]
+		,[Pay]
+FROM [dbo].[Pay - Female]
+
+UNION
+
+SELECT	[Name]
+		,[Pay]
+FROM [dbo].[Pay - Male]
+
+
 
 -------------------------------------------------------------------------------------------------------------------
 
-/*Linking Tables*/
+/*Joining Tables*/
+/*Primary table with child table becomes the joined table*/
+
+--INNER Join -> If key value is present in both tables, then that table is returned
+SELECT A.[Shop ID]
+      ,A.[Shop Name]
+      ,A.[Shop Region]
+      ,A.[Revenue]
+      ,A.[Profit]
+      ,B.[No  of Employees]
+      ,B.[Shop Size (Square Ft)]
+FROM [Joins - 1 Key - Table 1] AS A
+INNER JOIN [Joins - 1 Key - Table 2 - Inner] AS B
+  ON A.[Shop ID] = B.[Shop ID]
+
+--LEFT Join -> Left table + Matching Key values from right table is returned
+SELECT A.[Shop ID]
+      ,A.[Shop Name]
+      ,A.[Shop Region]
+      ,A.[Revenue]
+      ,A.[Profit]
+      ,B.[No  of Employees]
+      ,B.[Shop Size (Square Ft)]
+FROM [Joins - 1 Key - Table 1] AS A
+LEFT JOIN [Joins - 1 Key - Table 2 - Left] AS B
+  ON A.[Shop ID] = B.[Shop ID]
+
+--RIGHT Join - Opposite of Left join
+SELECT A.[Shop ID]
+      ,A.[Shop Name]
+      ,A.[Shop Region]
+      ,A.[Revenue]
+      ,A.[Profit]
+      ,B.[No  of Employees]
+      ,B.[Shop Size (Square Ft)]
+FROM [Joins - 1 Key - Table 1] AS A
+RIGHT JOIN [Joins - 1 Key - Table 2 - Right] AS B
+  ON A.[Shop ID] = B.[Shop ID]
+
+--FULL OUTER Join -> Returns everything, all values from both basically, like one big merge
+SELECT A.[Shop ID]
+      ,A.[Shop Name]
+      ,A.[Shop Region]
+      ,A.[Revenue]
+      ,A.[Profit]
+  ,B.[No  of Employees]
+  ,B.[Shop Size (Square Ft)]
+FROM [Joins - 1 Key - Table 1] AS A
+FULL OUTER JOIN [Joins - 1 Key - Table 2 - Outer] AS B
+  ON A.[Shop ID] = B.[Shop ID]
+
+--UNMATCHING Join -> Returns Everything EXCEPT the matching ones. So the ones that do not match between both
+SELECT A.[Shop ID]
+      ,A.[Shop Name]
+      ,A.[Shop Region]
+      ,A.[Revenue]
+      ,A.[Profit]
+  ,B.[No  of Employees]
+  ,B.[Shop Size (Square Ft)]
+FROM [Joins - 1 Key - Table 1] AS A
+FULL OUTER JOIN [Joins - 1 Key - Table 2 - Outer] AS B
+  ON A.[Shop ID] = B.[Shop ID]
+WHERE A.[Shop ID] IS NULL
+   OR B.[Shop ID] IS NULL
+
+--Joining using multiple fields
+SELECT A.[Shop ID]
+      ,A.[Shop Name]
+      ,A.[Shop Region]
+      ,A.[Revenue]
+      ,A.[Profit]
+      ,B.[No  of Employees]
+      ,B.[Shop Size (Square Ft)]
+FROM [Joins - 2 Keys - Table 1] AS A
+LEFT JOIN [Joins - 2 Keys - Table 2] AS B
+  ON A.[Shop ID] = B.[Shop ID]
+  AND A.[Department] = B.[Department]
+
+--Considering additional join keys
+SELECT A.[User ID]      
+      ,A.[Corporate ID]
+      ,A.[Department]
+      ,B.[User ID]        AS User_ID_table_B
+      ,B.[Expense Claim]
+FROM [dbo].[Joins - Left Table - OR Statement] AS A
+LEFT JOIN [dbo].[Joins - Right Table - OR Statement] AS B
+  ON (A.[User ID] = B.[User ID]) OR (A.[Corporate ID] = B.[User ID]) 
+
+-------------------------------------------------------------------------------------------------------------------
+
+/*FINAL - Joining Male and Female Pay table together*/
+SELECT	[Name]
+		,[Pay]
+INTO [Pay - Appended]
+FROM [dbo].[Pay - Female]
+
+UNION ALL
+
+SELECT	[Name]
+		,[Pay]
+FROM [dbo].[Pay - Male]
