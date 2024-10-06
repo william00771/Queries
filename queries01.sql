@@ -347,4 +347,30 @@ GROUP BY [Name]
 
 -------------------------------------------------------------------------------------------------------------------
 
+/*Filtering Aggregated Data - (like where but for aggregate functions)*/ 
+
+-- Filter where sum is greater than
+SELECT	[Name]
+		,SUM([Pay]) AS [Pay (Sum)]
+FROM [dbo].[Pay - Female]
+GROUP BY [Name]
+HAVING SUM([Pay]) > 6000
+
+-- Filter where count is not equal to 3
+SELECT	[Name]
+		,COUNT([Name]) AS [Count]
+FROM [dbo].[Pay - Female]
+GROUP BY [Name]
+HAVING COUNT([Name]) <> 3
+
+-- Having and where together for combined filtering
+SELECT	[Name]
+		,SUM([Pay]) AS [Pay]
+FROM [dbo].[Pay - Female]
+WHERE [Name] IN ('Rachel','Monica')
+GROUP BY [Name]
+HAVING SUM([Pay]) > 3
+
+-------------------------------------------------------------------------------------------------------------------
+
 /*Linking Tables*/
