@@ -259,8 +259,91 @@ WHERE [Address] LIKE '______a%'
 -------------------------------------------------------------------------------------------------------------------
 
 /*Putting Data Into Tables*/
+SELECT	[Suburb]
+		,[Address]
+		,[Rooms]
+		,[Date]
+		,[Car]
+		,[Final Price]
+INTO	[Results 0001]
+FROM	[dbo].[Melbourne Housing Master]
+WHERE [Distance] < 3
 
 
+-------------------------------------------------------------------------------------------------------------------
+
+/*Order By*/
+-- Order by ascending
+SELECT	[Suburb]
+		,[Address]
+		,[Rooms]
+		,[Date]
+		,[Car]
+		,[Final Price]
+FROM	[dbo].[Melbourne Housing Master]
+ORDER BY [Suburb] ASC
+
+-- Order by descending
+SELECT	[Suburb]
+		,[Address]
+		,[Rooms]
+		,[Date]
+		,[Car]
+		,[Final Price]
+FROM	[dbo].[Melbourne Housing Master]
+ORDER BY [Final Price] DESC
+
+-- Order by multible
+SELECT	[Suburb]
+		,[Address]
+		,[Rooms]
+		,[Date]
+		,[Car]
+		,[Final Price]
+FROM	[dbo].[Melbourne Housing Master]
+ORDER BY [Suburb] ASC
+		,[Rooms] DESC
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+/*Aggregating Data (Finding Values & Summarizing Datasets) GROUP BY*/
+-- Count how often specific occurrence happens
+SELECT	[Name]
+		,COUNT([Name]) AS [Count]
+FROM [dbo].[Pay - Female]
+GROUP BY [Name]
+
+-- Sum
+SELECT	[Name]
+		,SUM([Pay]) AS [Pay (Sum)]
+FROM [dbo].[Pay - Female]
+GROUP BY [Name]
+
+-- Average
+SELECT	[Name]
+		,AVG([Pay]) AS [Pay (Average)]
+FROM [dbo].[Pay - Female]
+GROUP BY [Name]
+
+-- Max, Min and range
+SELECT	[Name]
+		,MAX([Pay]) AS [Max Pay]
+		,MIN([Pay]) AS [Min Pay]
+		,(MAX([Pay]) - MIN([Pay])) AS [Pay Range]
+FROM [dbo].[Pay - Female]
+GROUP BY [Name]
+
+-- Final Report
+SELECT	[Name]
+		,SUM([Pay]) AS [Pay (Sum)]
+		,COUNT([Name]) AS [Count]
+		,AVG([Pay]) AS [Pay (Average)]
+		,MAX([Pay]) AS [Max Pay]
+		,MIN([Pay]) AS [Min Pay]
+		,(MAX([Pay]) - MIN([Pay])) AS [Pay Range]
+FROM [dbo].[Pay - Female]
+GROUP BY [Name]
 
 -------------------------------------------------------------------------------------------------------------------
 
