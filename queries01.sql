@@ -371,6 +371,73 @@ WHERE [Name] IN ('Rachel','Monica')
 GROUP BY [Name]
 HAVING SUM([Pay]) > 3
 
+
+-------------------------------------------------------------------------------------------------------------------
+
+/*Case flags/indicators aka Switch that highlight condition met*/
+
+-- Create 'flag sa' with boolean string values based on country cases and [category population] based on population
+SELECT [Country]
+      ,[Population]
+      ,[Year]
+      ,CASE WHEN [Country] = 'Brazil' THEN 'TRUE'
+     	    WHEN [Country] = 'Ecuador' THEN 'TRUE'
+     	    ELSE 'FALSE'
+		END AS [Flag - SA]
+      ,CASE WHEN [Population] > 100000000 THEN 'High'
+     	    WHEN [Population] BETWEEN  10000000 
+				AND 100000000 THEN 'Medium'
+     	    WHEN [Population] < 10000000 THEN 'Low'
+       	    ELSE 'N/A'
+        END AS [Category Population] 
+FROM [dbo].[Country Population]
+
+--Housing CASE statement
+SELECT [Suburb]
+      ,[Address]
+      ,[Rooms]
+      ,[Final Price]
+      ,[Car]
+  ,CASE WHEN [Rooms] > 4 THEN 'High'
+     WHEN [Rooms] < 3 THEN 'Low'
+     ELSE 'Medium'
+     END AS [Category - Rooms]
+  ,CASE WHEN [Car] = 0 THEN 'No'
+     ELSE 'Yes'
+     END AS [Flag - Car]
+FROM [Melbourne Housing Master]
+
+
+--Putting results into a table
+SELECT [Suburb]
+      ,[Address]
+      ,[Rooms]
+      ,[Final Price]
+      ,[Car]
+  ,CASE WHEN [Rooms] > 4 THEN 'High'
+     WHEN [Rooms] < 3 THEN 'Low'
+     ELSE 'Medium'
+     END AS [Category - Rooms]
+  ,CASE WHEN [Car] = 0 THEN 'No'
+     ELSE 'Yes'
+     END AS [Flag - Car]
+INTO [Case - results]
+FROM [Melbourne Housing Master]
+
+
+--Filtering on the table
+SELECT [Suburb]
+      ,[Address]
+      ,[Rooms]
+      ,[Final Price]
+      ,[Car]
+      ,[Category - Rooms]
+      ,[Flag - Car]
+  FROM [Case - results]
+  WHERE [Category - Rooms] = 'Medium'
+    AND [Flag - Car] = 'Yes'
+
+
 -------------------------------------------------------------------------------------------------------------------
 
 /*Linking Tables*/
