@@ -448,7 +448,8 @@ FROM
           ,[Description]
   HAVING COUNT(*) > 1
 
--- (21) STORED PROCEDURE (Variable) - 
+-- (21) STORED PROCEDURE (Variable) - If we run the stored procedure we can literally ADD the variable dynamically in the input field if we want! Just like the EXEC is defining it before runtime!
+-- Really fucking cool this! TSQL is fun!
   CREATE PROCEDURE [Restaurant Select]
 	@Restaurant nvarchar(100)
   AS
@@ -468,3 +469,108 @@ FROM
 -- (22) RUNNING STORED PROCEDURE
     EXEC  [dbo].[Restaurant Select]
 		  @Restaurant = 'Big Data Burger'
+
+
+------------------------------------------------------------------------------------------------------------------------
+/*Stored Procedures from the course - EXAMPLES*/
+-- Example 1
+USE [UDEMY SQL Course]
+GO
+/****** Object:  StoredProcedure [dbo].[Convert - Country Population]    Script Date: 08/10/2024 17:40:55 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[Convert - Country Population]
+
+AS
+
+SELECT [Country]
+      ,CAST([Population] AS INT) AS [Population]
+      ,[Year]
+INTO [dbo].[Country Population]
+FROM [dbo].[Country Population_]
+
+
+
+-- Example 2
+USE [UDEMY SQL Course]
+GO
+/****** Object:  StoredProcedure [dbo].[Convert - Female]    Script Date: 08/10/2024 17:41:09 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[Convert - Female] 
+AS
+
+IF OBJECT_ID(N'Female Pay','U') IS NOT NULL 
+  DROP TABLE [dbo].[Pay - Female]
+
+SELECT [Name]
+	  ,CAST([Pay] AS INT) AS [Pay]
+INTO [dbo].[Pay - Female]
+FROM [dbo].[Pay - Female_]
+
+
+
+-- Example 3
+USE [UDEMY SQL Course]
+GO
+/****** Object:  StoredProcedure [dbo].[Convert - Male]    Script Date: 08/10/2024 17:41:23 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[Convert - Male] 
+AS
+
+IF OBJECT_ID(N'Male Pay','U') IS NOT NULL 
+  DROP TABLE [dbo].[Pay - Male]
+
+SELECT [Name]
+	  ,CAST([Pay] AS INT) AS [Pay]
+INTO [dbo].[Pay - Male]
+FROM [dbo].[Pay - Male_]
+
+
+
+-- Example 4
+USE [UDEMY SQL Course]
+GO
+/****** Object:  StoredProcedure [dbo].[Melbourne Housing - Convert Datatypes]    Script Date: 08/10/2024 17:41:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[Melbourne Housing - Convert Datatypes]
+AS 
+
+IF OBJECT_ID(N'Melbourne Housing Master','U') IS NOT NULL
+	DROP TABLE [Melbourne Housing Master]
+
+SELECT [Suburb]
+      ,[Address]
+      ,[Rooms]
+      ,[Type]
+      ,CAST([Price] AS INT) AS [Price]
+      ,CAST([Suburb Price Average] AS INT) AS [Suburb Price Average]
+      ,CAST([Final Price] AS INT) AS [Final Price]
+      ,[Method]
+      ,[SellerG]
+      ,CONVERT(date,[Date],103) AS [Date]
+      ,CAST([Distance] AS decimal(18,2)) AS [Distance]
+      ,[Postcode]
+      ,[Bedroom2]
+      ,[Bathroom]
+      ,CAST([Car] AS INT) AS [Car]
+      ,[Landsize]
+      ,[BuildingArea]
+      ,[YearBuilt]
+      ,[CouncilArea]
+      ,[Latitude]
+      ,[Longitude]
+      ,[Regionname]
+      ,[Propertycount]
+  INTO [dbo].[Melbourne Housing Master]
+  FROM [dbo].[Melbourne Housing Master_]
