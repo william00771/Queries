@@ -3,6 +3,10 @@
 SELECT	*
 FROM	[dbo].[Melbourne Housing Master]
 
+-- Select top 100
+SELECT TOP (100) *
+FROM	[dbo].[Melbourne Housing Master]
+
 -- Select Specific
 SELECT	[Suburb]
 		,[Address]
