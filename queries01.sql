@@ -14,7 +14,7 @@ SELECT	[Suburb]
 FROM	[dbo].[Melbourne Housing Master]
 
 -- Renaming Columns (DisplayName)
-SELECT	[Suburb] AS [Förort]
+SELECT	[Suburb] AS [Fï¿½rort]
 		,[Type] AS [Bostadstyp]
 FROM	[dbo].[Melbourne Housing Master]
 
@@ -312,6 +312,13 @@ ORDER BY [Suburb] ASC
 -------------------------------------------------------------------------------------------------------------------
 
 /*Aggregating Data (Finding Values & Summarizing Datasets) GROUP BY*/
+
+-- Math Operations - Sum of ex movie lengths by genre, if we don't do group by then it gets first genre and adds ALL SUM of length all movies
+SELECT 	[genre], 
+    	SUM(length) AS [sum(length)]
+FROM [Movies]
+GROUP BY [genre]
+
 -- Count how often specific occurrence happens
 SELECT	[Name]
 		,COUNT([Name]) AS [Count]
