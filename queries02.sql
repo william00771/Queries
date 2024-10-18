@@ -16,6 +16,10 @@ UPDATE [Restaurant - Master]
 SET [Meal Sides] = NULL
 WHERE [Meal Sides] = ''
 
+UPDATE [patients]
+SET [allergies] = 'NKA'
+WHERE [allergies] IS NULL;
+
 UPDATE [Restaurant - Master]
 SET [Additional Details 1] = NULL
 WHERE [Additional Details 1] = ''
@@ -305,7 +309,7 @@ FROM
 -- It does allow flexibility. Cause it does not actually use any storage. But it does draw from the orignal table dataset.
 
 -- (15) VIEWS
-    CREATE VIEW [Missing Meal Sides]
+  CREATE VIEW [Missing Meal Sides]
 	AS 
 	SELECT [Restaurant Name]
           ,[Meal Release Date]
